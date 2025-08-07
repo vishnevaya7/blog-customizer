@@ -9,14 +9,17 @@ import {
 	fontColors,
 	fontFamilyOptions,
 	fontSizeOptions,
+	defaultArticleState,
 } from 'src/constants/articleProps';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
 import { useState } from 'react';
+import { StyleFormData } from 'src/index';
 
 export type ArticleParamsFormProps = {
 	isOpen: boolean;
 	onClickArrow: () => void;
+	onApply: (formData: StyleFormData) => void;
 };
 
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
@@ -31,6 +34,31 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [selectedContentWidth, setSelectedContentWidth] = useState(
 		contentWidthArr[0]
 	);
+	const handleApply = () => {
+		const formData = {
+			fontFamily: selectedFontFamily.value,
+			fontSize: selectedFontSize.value,
+			fontColor: selectedFontColor.value,
+			backgroundColor: selectedBackgroundColor.value,
+			containerWidth: selectedContentWidth.value,
+		};
+		props.onApply(formData);
+	};
+	const handleReset = () => {
+		setSelectedFontSize(defaultArticleState.fontSizeOption);
+		setSelectedFontFamily(defaultArticleState.fontFamilyOption);
+		setSelectedFontColor(defaultArticleState.fontColor);
+		setSelectedBackgroundColor(defaultArticleState.backgroundColor);
+		setSelectedContentWidth(defaultArticleState.contentWidth);
+
+		props.onApply({
+			fontFamily: defaultArticleState.fontFamilyOption.value,
+			fontSize: defaultArticleState.fontSizeOption.value,
+			fontColor: defaultArticleState.fontColor.value,
+			backgroundColor: defaultArticleState.backgroundColor.value,
+			containerWidth: defaultArticleState.contentWidth.value,
+		});
+	};
 	return (
 		<>
 			<ArrowButton isOpen={props.isOpen} onClick={props.onClickArrow} />
@@ -78,8 +106,18 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 						/>
 					</div>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' htmlType='reset' type='clear' />
-						<Button title='Применить' htmlType='submit' type='apply' />
+						<Button
+							onClick={handleReset}
+							title='Сбросить'
+							htmlType='reset'
+							type='clear'
+						/>
+						<Button
+							onClick={handleApply}
+							title='Применить'
+							htmlType='button'
+							type='apply'
+						/>
 					</div>
 				</form>
 			</aside>
