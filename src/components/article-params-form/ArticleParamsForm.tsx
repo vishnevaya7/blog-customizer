@@ -63,11 +63,13 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		applyStylesToMain(applyStyles);
+		props.onClickArrow();
 	};
 
 	const handleReset = () => {
 		setApplyStyles(defaultArticleState);
 		applyStylesToMain(defaultArticleState);
+		props.onClickArrow();
 	};
 	return (
 		<>
