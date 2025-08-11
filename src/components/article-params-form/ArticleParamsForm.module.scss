@@ -30,3 +30,13 @@
 	justify-content: space-between;
 	margin-top: auto;
 }
+
+.content {
+	display: flex;
+	flex-direction: column;
+	row-gap: 50px;
+}
+
+.title {
+	font-weight: 400;
+}
